@@ -24,7 +24,7 @@ function M.action(selected_option)
   local entry_point = utils.os_path(vim.fn.getcwd() .. "/Main.java") -- working_directory/Main.java
   local files = utils.find_files_to_compile(entry_point, "*.java")   -- *.java files under entry_point_dir (recursively)
   local output_dir = utils.os_path(vim.fn.getcwd() .. "/bin/")
-  local output = output_dir + "Main.class"                           -- working_directory/bin/Main.class
+  local output = output_dir .. "Main.class"                          -- working_directory/bin/Main.class
   local output_filename =
   "Main"                                                             -- working_directory/bin/Main
   local arguments =
