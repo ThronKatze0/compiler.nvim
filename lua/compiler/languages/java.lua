@@ -21,14 +21,15 @@ M.options = {
 function M.action(selected_option)
   local utils = require("compiler.utils")
   local overseer = require("overseer")
-  local entry_point = utils.os_path(vim.fn.getcwd() .. "/Main.java")                                             -- working_directory/Main.java
-  local files = utils.find_files_to_compile(entry_point, "*.java")                                               -- *.java files under entry_point_dir (recursively)
-  local output_dir = utils.os_path("..../out/production/" .. vim.fn.fnamemodify(vim.fn.expand('%:p:h:h'), ':t')) -- working_directory/bin/
-  local output = utils.os_path(vim.fn.getcwd() .. "/bin/Main")                                                   -- working_directory/bin/Main.class
+  local entry_point = utils.os_path(vim.fn.getcwd() .. "/Main.java")                                                    -- working_directory/Main.java
+  local files = utils.find_files_to_compile(entry_point, "*.java")                                                      -- *.java files under entry_point_dir (recursively)
+  local output_dir = utils.os_path("..../out/production/" .. vim.fn.fnamemodify(vim.fn.expand('%:p:h:h'), ':t')) ..
+  "/"                                                                                                                   -- working_directory/bin/
+  local output = utils.os_path(vim.fn.getcwd() .. "/bin/Main")                                                          -- working_directory/bin/Main.class
   local output_filename =
-  "Main"                                                                                                         -- working_directory/bin/Main
+  "Main"                                                                                                                -- working_directory/bin/Main
   local arguments =
-  "-Xlint:all"                                                                                                   -- arguments can be overriden in .solution
+  "-Xlint:all"                                                                                                          -- arguments can be overriden in .solution
   local final_message = "--task finished--"
 
   --========================== Build as class ===============================--
