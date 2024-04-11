@@ -23,13 +23,12 @@ function M.action(selected_option)
   local overseer = require("overseer")
   local entry_point = utils.os_path(vim.fn.getcwd() .. "/Main.java") -- working_directory/Main.java
   local files = utils.find_files_to_compile(entry_point, "*.java")   -- *.java files under entry_point_dir (recursively)
-  local output_dir = utils.os_path(vim.fn.fnamemodify(vim.fn.expand('%:p:h'), ':h:h') ..
-    "/out/production/" .. vim.fn.fnamemodify(vim.fn.expand('%:p:h:h'), ':t') .. "/")
-  local output = utils.os_path(vim.fn.getcwd() .. "/bin/Main") -- working_directory/bin/Main.class
+  local output_dir = utils.os_path(vim.fn.getcwd() .. "/bin/")
+  local output = output_dir + "Main.class"                           -- working_directory/bin/Main.class
   local output_filename =
-  "Main"                                                       -- working_directory/bin/Main
+  "Main"                                                             -- working_directory/bin/Main
   local arguments =
-  "-Xlint:all"                                                 -- arguments can be overriden in .solution
+  "-Xlint:all"                                                       -- arguments can be overriden in .solution
   local final_message = "--task finished--"
 
   --========================== Build as class ===============================--
@@ -41,8 +40,7 @@ function M.action(selected_option)
         tasks = { {
           "shell",
           name = "- Build & run program (class) → " .. entry_point,
-          cmd = "rm -f " .. output_dir .. "*.class " .. " || true" ..                     -- clean
-              " && mkdir -p " .. output_dir ..                                            -- mkdir
+          cmd = "mkdir -p " .. output_dir ..                                              -- mkdir
               " && javac " .. " -d " .. output_dir .. " " .. arguments .. " " .. files .. -- compile bytecode (.class)
               " && java -cp " .. output_dir .. " " .. output_filename ..                  -- run
               " && echo " .. entry_point ..                                               -- echo
@@ -60,7 +58,7 @@ function M.action(selected_option)
         tasks = { {
           "shell",
           name = "- Build program (class) → " .. entry_point,
-          cmd = "rm -f " .. output_dir .. "/*.class " .. " || true" ..                    -- clean
+          cmd = "rm -rf " .. output_dir ..                                                -- clean
               " && mkdir -p " .. output_dir ..                                            -- mkdir
               " && javac " .. " -d " .. output_dir .. " " .. arguments .. " " .. files .. -- compile bytecode (.class)
               " && echo " .. entry_point ..                                               -- echo
